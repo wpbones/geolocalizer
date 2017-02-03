@@ -1,13 +1,14 @@
 {
   "name": "wpbones/geolocalizer",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "homepage": "https://github.com/wpbones/geolocalizer",
   "license": "MIT",
   "type": "library",
   "description": "Geo provider for WP Bones",
   "keywords": [
-    "css",
-    "less",
+    "geo",
+    "localization",
+    "countries",
     "WP Bones"
   ],
   "authors": [
@@ -27,7 +28,7 @@
   },
   "autoload": {
     "psr-4": {
-      "WPBannerize\\GeoLocalizer\\": "src/"
+      "WPKirk\\GeoLocalizer\\": "src/"
     }
   },
   "minimum-stability": "stable",

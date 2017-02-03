@@ -1,19 +1,25 @@
 <?php
 
-namespace WPBannerize\GeoLocalizer;
+namespace WPKirk\GeoLocalizer;
 
 class GeoLocalizerProvider
 {
   /**
-   * TELIZE end point api http://www.telize.com/
    * Used to get geocoding information by IP address
    */
-  const TELIZE_END_POINT = 'http://www.telize.com/geoip/';
+  const GEOIP_ENDPOINT = 'http://freegeoip.net/';
 
   /**
    * Google Maps - used for reverse geocoding
    */
   const GOOGLE_REVERSE_GEOCODIND = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=';
+
+  /**
+   * Outut format: json, xml, csv
+   *
+   * @var string
+   */
+  protected $format = 'json';
 
   public static function __callStatic( $name, $arguments )
   {
@@ -43,7 +49,7 @@ class GeoLocalizerProvider
    *       Only for Rome and Landon
    *     [/wp_geolocalizer]
    *
-   *     [wp_geolocalizer region="lazio"]
+   *     [wp_geolocalizer region_name="lazio"]
    *       Only for region (Italy) Lazio
    *     [/wp_geolocalizer]
    *
@@ -51,8 +57,20 @@ class GeoLocalizerProvider
    *       Italian only
    *     [/wp_geolocalizer]
    *
-   *     [wp_geolocalizer country="italy"]
+   *     [wp_geolocalizer country_name="italy"]
    *       Italian only
+   *     [/wp_geolocalizer]
+   *
+   *     [wp_geolocalizer zip_code="00137"]
+   *       Wow
+   *     [/wp_geolocalizer]
+   *
+   *     [wp_geolocalizer ip="80.182.82.82"]
+   *       Only for me
+   *     [/wp_geolocalizer]
+   *
+   *     [wp_geolocalizer time_zone="europe\rome"]
+   *       Rome/Berlin time zone
    *     [/wp_geolocalizer]
    *
    * @param array  $atts    Attribute into the shortcode
@@ -64,43 +82,78 @@ class GeoLocalizerProvider
   {
     // Defaults
     $defaults = [
-      'city'         => '',
-      'region'       => '',
+      'ip'           => '',
       'country_code' => '',
-      'country'      => '',
+      'country_name' => '',
+      'region_code'  => '',
+      'region_name'  => '',
+      'city'         => '',
+      'zip_code'     => '',
+      'time_zone'    => '',
     ];
 
     // Merge with shortcode.
-    $args = shortcode_atts( $defaults, $atts, 'wp_geolocalizer' );
+    $atts = shortcode_atts( $defaults, $atts, 'wp_geolocalizer' );
+
+    $isEmpty = true;
+
+    foreach ( array_keys( $defaults ) as $key ) {
+      if ( ! empty( $atts[ $key ] ) ) {
+        $isEmpty = false;
+        break;
+      }
+    }
 
     // Check for empty
-    if ( empty( $args[ 'city' ] ) && empty( $args[ 'region' ] ) && empty( $args[ 'country_code' ] ) && empty( $args[ 'country' ] ) ) {
+    if ( $isEmpty ) {
       return ! is_null( $content ) ? $content : '';
     }
 
     // Get GEO info
     $geo = $this->geoIP();
 
+    /*
+     * {
+     *   "ip":"80.181.80.86",
+     *   "country_code":"it",
+     *   "country_name":"italy",
+     *   "region_code":"62",
+     *   "region_name":"latium",
+     *   "city":"rome",
+     *   "zip_code":"00199",
+     *   "time_zone":"europe\/rome",
+     *   "latitude":"41.8919","longitude":"12.5113",
+     *   "metro_code":"0"
+     * }
+     */
+
     // Turn all geo info in lowercase
-    $geo = array_map( create_function( '$a', 'return strtolower($a);' ), $geo );
+    $geo = array_map(
+      function ( $value ) {
+        return strtolower( $value );
+      },
+      $geo
+    );
 
     // Turn all args in lowercase
-    $args = array_map( create_function( '$a', 'return strtolower($a);' ), $args );
+    $atts = array_map(
+      function ( $value ) {
+        return strtolower( $value );
+      },
+      $atts
+    );
 
-    // Sanitize
-    $cities        = explode( ',', $args[ 'city' ] );
-    $regions       = explode( ',', $args[ 'region' ] );
-    $country_codes = explode( ',', $args[ 'country_code' ] );
-    $countries     = explode( ',', $args[ 'country' ] );
-
-    // Flags in OR
-    $city_bool         = in_array( $geo[ 'city' ], $cities );
-    $region_bool       = in_array( $geo[ 'region' ], $regions );
-    $country_code_bool = in_array( $geo[ 'country_code' ], $country_codes );
-    $country_bool      = in_array( $geo[ 'country' ], $countries );
+    $found = false;
+    foreach ( array_keys( $defaults ) as $key ) {
+      $array = explode( ',', $atts[ $key ] );
+      if ( in_array( $geo[ $key ], $array ) ) {
+        $found = true;
+        break;
+      }
+    }
 
     // Check pass
-    if ( $city_bool || $region_bool || $country_code_bool || $country_bool ) {
+    if ( $found ) {
       return ! is_null( $content ) ? $content : '';
     }
   }
@@ -138,7 +191,7 @@ class GeoLocalizerProvider
     $ip = empty( $ip ) ? $_SERVER[ 'REMOTE_ADDR' ] : $ip;
 
     // Build endpoint API
-    $endpoint = self::TELIZE_END_POINT . $ip;
+    $endpoint = self::GEOIP_ENDPOINT . $this->format . '/' . $ip;
 
     $response = wp_remote_get( $endpoint );
 
