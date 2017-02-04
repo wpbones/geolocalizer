@@ -244,6 +244,7 @@ class GeoLocalizerProvider
   {
     // Get current ip
     $ip = empty( $ip ) ? $_SERVER[ 'REMOTE_ADDR' ] : $ip;
+    // $ip = "80.181.80.86";
 
     // Build endpoint API
     $endpoint = self::GEOIP_ENDPOINT . $this->format . '/' . $ip;
