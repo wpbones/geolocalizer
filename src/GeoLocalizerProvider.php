@@ -12,7 +12,7 @@ class GeoLocalizerProvider
   /**
    * Google Maps - used for reverse geocoding
    */
-  const GOOGLE_REVERSE_GEOCODIND = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=';
+  const GOOGLE_REVERSE_GEOCODING = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=';
 
   /**
    * Outut format: json, xml, csv
@@ -32,6 +32,61 @@ class GeoLocalizerProvider
     }
 
     return $instance;
+  }
+
+  protected function callableHasCountries( $countries = [] )
+  {
+    if ( ! empty( $countries ) ) {
+      // Get GEO info
+      $geo = $this->geoIP();
+
+      /*
+       * {
+       *   "ip":"80.181.80.86",
+       *   "country_code":"it",
+       *   "country_name":"italy",
+       *   "region_code":"62",
+       *   "region_name":"latium",
+       *   "city":"rome",
+       *   "zip_code":"00199",
+       *   "time_zone":"europe\/rome",
+       *   "latitude":"41.8919","longitude":"12.5113",
+       *   "metro_code":"0"
+       * }
+       */
+
+      // Turn all geo info in lowercase
+      $geo = array_map(
+        function ( $value ) {
+          return strtolower( $value );
+        },
+        $geo
+      );
+
+      // Turn all $countries info in lowercase
+      $countries = array_map(
+        function ( $value ) {
+          return strtolower( $value );
+        },
+        $countries
+      );
+
+      return in_array( $geo[ 'country_name' ], $countries );
+    }
+
+    return false;
+  }
+
+  protected function callableCountries()
+  {
+    global $wpdb;
+
+    $tablename = $wpdb->prefix . "countries";
+
+    $result = $wpdb->get_results( "SELECT country FROM {$tablename} ORDER BY country" );
+
+    return $result;
+
   }
 
   /**
@@ -232,7 +287,7 @@ class GeoLocalizerProvider
   {
 
     // Build the endpoit
-    $endpoint = sprintf( '%s%s,%s', self::GOOGLE_REVERSE_GEOCODIND, $lat, $lng );
+    $endpoint = sprintf( '%s%s,%s', self::GOOGLE_REVERSE_GEOCODING, $lat, $lng );
 
     $response = wp_remote_get( $endpoint );
 

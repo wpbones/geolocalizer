@@ -39,3 +39,71 @@ In the `database/migrations` you'll find the default migration database table us
 Also. in the `database/seeds` you'll find the data for countries database table.
 
 Anyway, you just copy these folders in your plugin `database/` folder.
+
+## Shortcode
+
+Geolocalizer provides a shortcode method. You can define you own shortocde in the your shortcode provider class:
+ 
+```php
+use WPMyPlugin\WPBones\Foundation\WordPressShortcodesServiceProvider as ServiceProvider;
+use WPMyPlugin\GeoLocalizer\GeoLocalizerProvider;
+
+class WPMyPluginShortcode extends ServiceProvider
+{
+
+  /**
+   * List of registred shortcodes. {shortcode}/method
+   *
+   * @var array
+   */
+  protected $shortcodes = [
+    'my_shortocde_geo' => 'my_shortocde_geo',
+  ];
+
+  
+  public function my_shortocde_geo( $atts = [], $content = null )
+  {
+    return GeoLocalizerProvider::shortcode( $atts, $content );
+  }
+    
+```
+
+The you can use:
+
+``` 
+[my_shortocde_geo city="Rome"]
+  Only for Rome
+[/my_shortocde_geo]
+
+[my_shortocde_geo city="rome"]
+  Only for Rome
+[/my_shortocde_geo]
+
+[my_shortocde_geo city="rome,london"]
+  Only for Rome and Landon
+[/my_shortocde_geo]
+
+[my_shortocde_geo region_name="lazio"]
+  Only for region (Italy) Lazio
+[/my_shortocde_geo]
+
+[my_shortocde_geo country_code="IT"]
+  Italian only
+[/my_shortocde_geo]
+
+[my_shortocde_geo country_name="italy"]
+  Italian only
+[/my_shortocde_geo]
+
+[my_shortocde_geo zip_code="00137"]
+  Wow
+[/my_shortocde_geo]
+
+[my_shortocde_geo ip="80.182.82.82"]
+  Only for me
+[/my_shortocde_geo]
+
+[my_shortocde_geo time_zone="europe\rome"]
+  Rome/Berlin time zone
+[/my_shortocde_geo]
+```
