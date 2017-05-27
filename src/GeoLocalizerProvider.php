@@ -209,7 +209,7 @@ class GeoLocalizerProvider
 
     // Check pass
     if ( $found ) {
-      return ! is_null( $content ) ? $content : '';
+      return ! is_null( $content ) ? do_shortcode( $content ) : '';
     }
   }
 
@@ -244,7 +244,12 @@ class GeoLocalizerProvider
   {
     // Get current ip
     $ip = empty( $ip ) ? $_SERVER[ 'REMOTE_ADDR' ] : $ip;
-    // $ip = "80.181.80.86";
+
+    // use below for debug, insert define( 'GEOLOCALIZER_DEMO', true ); in your wp-config.php
+    // to enable demo IP
+    if( defined( 'GEOLOCALIZER_DEMO' ) ) {
+      $ip = "80.181.80.86";
+    }
 
     // Build endpoint API
     $endpoint = self::GEOIP_ENDPOINT . $this->format . '/' . $ip;
