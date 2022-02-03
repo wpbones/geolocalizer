@@ -7,7 +7,8 @@ class GeoLocalizerProvider
     /**
      * Used to get geocoding information by IP address
      */
-    const GEOIP_ENDPOINT = 'http://freegeoip.net/';
+
+    const GEOIP_ENDPOINT = 'http://api.ipstack.com/check?access_key=';
 
     /**
      * Google Maps - used for reverse geocoding
@@ -19,7 +20,7 @@ class GeoLocalizerProvider
      *
      * @var string
      */
-    protected $format = 'json';
+    protected $format = '&output=json&legacy=1';
 
     public static function __callStatic($name, $arguments)
     {
@@ -32,6 +33,10 @@ class GeoLocalizerProvider
         }
 
         return $instance;
+    }
+
+    protected function callableGeoIp() {
+       return $this->geoIP();
     }
 
     protected function callableHasCountries($countries = [])
@@ -143,9 +148,9 @@ class GeoLocalizerProvider
             'region_code' => '',
             'region_name' => '',
             'city' => '',
-            'zip_code' => '',
-            'time_zone' => '',
+            'zip' => '',
         ];
+
 
         // Merge with shortcode.
         $atts = shortcode_atts($defaults, $atts, 'wp_geolocalizer');
@@ -168,6 +173,45 @@ class GeoLocalizerProvider
         $geo = $this->geoIP();
 
         /*
+        (
+            [ip] => 104.219.249.235
+            [type] => ipv4
+            [continent_code] => NA
+            [continent_name] => North America
+            [country_code] => US
+            [country_name] => United States
+            [region_code] => CA
+            [region_name] => California
+            [city] => Los Angeles
+            [zip] => 90064
+            [latitude] => 34.037078857422
+            [longitude] => -118.42788696289
+            [location] => stdClass Object
+                (
+                    [geoname_id] => 5368361
+                    [capital] => Washington D.C.
+                    [languages] => Array
+                        (
+                            [0] => stdClass Object
+                                (
+                                    [code] => en
+                                    [name] => English
+                                    [native] => English
+                                )
+
+                        )
+
+                    [country_flag] => https://assets.ipstack.com/flags/us.svg
+                    [country_flag_emoji] => 🇺🇸
+                    [country_flag_emoji_unicode] => U+1F1FA U+1F1F8
+                    [calling_code] => 1
+                    [is_eu] =>
+                )
+
+        )
+        */
+
+        /*
          * {
          *   "ip":"80.181.80.86",
          *   "country_code":"it",
@@ -185,7 +229,7 @@ class GeoLocalizerProvider
         // Turn all geo info in lowercase
         $geo = array_map(
             function ($value) {
-                return strtolower($value);
+                return is_string($value) ? strtolower($value) : $value;
             },
             $geo
         );
@@ -242,6 +286,14 @@ class GeoLocalizerProvider
      */
     protected function geoIP($ip = '')
     {
+
+        // Get the ipstack API Key
+        $api_key = apply_filters('wpbones_geolocalizer_ipstack_api_key', '');
+
+        if(empty($api_key)) {
+            return false;
+        }
+
         // Get current ip
         $ip = empty($ip) ? $_SERVER['REMOTE_ADDR'] : $ip;
 
@@ -252,7 +304,7 @@ class GeoLocalizerProvider
         }
 
         // Build endpoint API
-        $endpoint = self::GEOIP_ENDPOINT . $this->format . '/' . $ip;
+        $endpoint = self::GEOIP_ENDPOINT . $api_key . $this->format;
 
         $response = wp_remote_get($endpoint);
 
