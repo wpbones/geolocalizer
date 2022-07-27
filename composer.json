@@ -1,6 +1,6 @@
 {
   "name": "wpbones/geolocalizer",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "homepage": "https://github.com/wpbones/geolocalizer",
   "license": "MIT",
   "type": "library",
@@ -11,11 +11,13 @@
     "countries",
     "WP Bones"
   ],
-  "authors": [{
+  "authors": [
+    {
       "name": "Giovambattista Fazioli",
       "email": "giovambattista.fazioli@gmail.com",
       "homepage": "http://undolog.com"
-  }],
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/wpbones/geolocalizer.git"

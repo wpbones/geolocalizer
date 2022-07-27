@@ -100,6 +100,10 @@ class GeoLocalizerProvider
       // Get GEO info
       $geo = $this->geoIP();
 
+      if (isset($geo['error'])) {
+        return false;
+      }
+
       /*
        * {
        *   "ip":"80.181.80.86",
@@ -191,7 +195,7 @@ class GeoLocalizerProvider
    * @param array  $atts    Attribute into the shortcode
    * @param string $content Optional. $content HTML content
    *
-   * @return bool|string
+   * @return string
    */
   protected function callableShortcode($atts, $content = null)
   {
@@ -219,6 +223,8 @@ class GeoLocalizerProvider
       return;
     }
 
+    unset($atts['debug']);
+
     $isEmpty = true;
 
     foreach (array_keys($defaults) as $key) {
@@ -235,6 +241,10 @@ class GeoLocalizerProvider
 
     // Get GEO info
     $geo = $this->geoIP();
+
+    if (isset($geo['error'])) {
+      return !is_null($content) ? $content : '';
+    }
 
     /*
     (
@@ -333,6 +343,10 @@ class GeoLocalizerProvider
   {
     // Sanitize
     $geo = empty($geo) ? $this->geoIP() : $geo;
+
+    if (isset($geo['error'])) {
+      return [];
+    }
 
     return $this->reverseGeocodingWithLatLng($geo['latitude'], $geo['longitude']);
   }
