@@ -18,13 +18,13 @@ You can use composer to install this package:
 
     $ composer require wpbones/geolocalizer
 
-You may also to add `"wpbones/geolocalizer": "~0.5"` in the `composer.json` file of your plugin:
+You may also to add `"wpbones/geolocalizer": "~0.7"` in the `composer.json` file of your plugin:
 
 ```json
   "require": {
-    "php": ">=7.3.0",
+    "php": ">=7.4.0",
     "wpbones/wpbones": "~1.0",
-    "wpbones/geolocalizer": "~0.6"
+    "wpbones/geolocalizer": "~0.7"
   },
 ```
 
@@ -35,7 +35,7 @@ and run
 ## Migration
 
 In the `database/migrations` you'll find the default migration database table used for the countries.
-Also. in the `database/seeds` you'll find the data for countries database table.
+Also. in the `database/seeders` you'll find the data for countries database table.
 
 Anyway, you just copy these folders in your plugin `database/` folder.
 

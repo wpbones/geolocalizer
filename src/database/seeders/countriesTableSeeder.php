@@ -2,7 +2,7 @@
 
 use WPBannerize\WPBones\Database\Seeder;
 
-class CountriesTableSeeder extends Seeder {
+return new class extends Seeder {
 
   protected $tablename = 'countries';
 
@@ -257,4 +257,4 @@ class CountriesTableSeeder extends Seeder {
       	(242,'','Serbia','RS','DInar','','','RSD',0.00,'europe','publish')"
     );
   }
-}
+};

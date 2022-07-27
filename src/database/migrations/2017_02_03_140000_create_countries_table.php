@@ -2,12 +2,12 @@
 
 use WPBannerize\WPBones\Database\Migrations\Migration;
 
-class Countries extends Migration
+return new class extends Migration
 {
 
   public function up()
   {
-    $this->create( "CREATE TABLE {$this->tablename} (
+    $this->create( 'countries', "(
       id bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID Zone-Country',
       zone varchar(255) NOT NULL DEFAULT '' COMMENT 'Zone',
       country varchar(255) NOT NULL DEFAULT '' COMMENT 'Country name',
@@ -24,4 +24,4 @@ class Countries extends Migration
     ) {$this->charsetCollate};" );
   }
 
-}
+};
