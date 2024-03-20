@@ -1,6 +1,6 @@
 <?php
 
-use WPBannerize\WPBones\Database\Seeder;
+use WPKirk\WPBones\Database\Seeder;
 
 return new class extends Seeder {
 

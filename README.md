@@ -1,6 +1,6 @@
 # Geo Localizer packager for WP Bones
 
-Geo Localizer provides a set of utilies to manage the geolocalization for WordPress/WP Bones
+Geo Localizer provides a set of utilities to manage geolocation for WordPress/WP Bones
 
 [![Latest Stable Version](https://poser.pugx.org/wpbones/geolocalizer/v/stable)](https://packagist.org/packages/wpbones/geolocalizer)
 [![Total Downloads](https://poser.pugx.org/wpbones/geolocalizer/downloads)](https://packagist.org/packages/wpbones/geolocalizer)
@@ -10,13 +10,17 @@ Geo Localizer provides a set of utilies to manage the geolocalization for WordPr
 
 You can install third party packages by using:
 
-    $ php bones require wpbones/geolocalizer
+```sh
+php bones require wpbones/geolocalizer
+```
 
 I advise to use this command instead of `composer require` because doing this an automatic renaming will done.
 
 You can use composer to install this package:
 
-    $ composer require wpbones/geolocalizer
+```sh
+composer require wpbones/geolocalizer
+```
 
 You may also to add `"wpbones/geolocalizer": "~0.7"` in the `composer.json` file of your plugin:
 
@@ -30,7 +34,9 @@ You may also to add `"wpbones/geolocalizer": "~0.7"` in the `composer.json` file
 
 and run
 
-    $ composer install
+```sh
+composer install
+```
 
 ## Migration
 
@@ -65,7 +71,7 @@ You should receive all information starting from your IP address. Otherwise, you
 
 ## Shortcode
 
-Geolocalizer provides a shortcode method. You can define you own shortocde in the your shortcode provider class:
+Geolocalizer provides a shortcode method. You can define you own shortcode in the your shortcode provider class:
 
 ```php
 use WPMyPlugin\WPBones\Foundation\WordPressShortcodesServiceProvider as ServiceProvider;

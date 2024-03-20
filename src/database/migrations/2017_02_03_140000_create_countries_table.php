@@ -1,6 +1,6 @@
 <?php
 
-use WPBannerize\WPBones\Database\Migrations\Migration;
+use WPKirk\WPBones\Database\Migrations\Migration;
 
 return new class extends Migration
 {
