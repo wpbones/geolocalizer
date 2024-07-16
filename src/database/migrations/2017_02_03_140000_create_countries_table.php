@@ -2,12 +2,10 @@
 
 use WPKirk\WPBones\Database\Migrations\Migration;
 
-return new class extends Migration
-{
-
-  public function up()
-  {
-    $this->create( 'countries', "(
+return new class extends Migration {
+    public function up()
+    {
+        $this->create('countries', "(
       id bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID Zone-Country',
       zone varchar(255) NOT NULL DEFAULT '' COMMENT 'Zone',
       country varchar(255) NOT NULL DEFAULT '' COMMENT 'Country name',
@@ -21,7 +19,7 @@ return new class extends Migration
       status enum('publish','trash') NOT NULL DEFAULT 'publish' COMMENT 'Status of record',
       PRIMARY KEY (id),
       KEY status (status)
-    ) {$this->charsetCollate};" );
-  }
+    ) {$this->charsetCollate};");
+    }
 
 };
