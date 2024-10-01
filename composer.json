@@ -14,11 +14,11 @@
     {
       "name": "Giovambattista Fazioli",
       "email": "wpbones.info@gmail.com",
-      "homepage": "https://wpbones.vercel.app/docs/Packages/official-packages"
+      "homepage": "https://wpbones.com/docs/Packages/official-packages"
     }
   ],
   "support": {
-    "email": "giovambattista.fazioli@gmail.com",
+    "email": "wpbones.info@gmail.com",
     "issues": "https://github.com/wpbones/geolocalizer/issues"
   },
   "autoload": {
