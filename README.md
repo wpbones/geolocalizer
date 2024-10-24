@@ -1,28 +1,14 @@
 # Geo Localizer packager for WP Bones
 
-<p align="center">
+<div align="center">
 
-  <a href="https://packagist.org/packages/wpbones/geolocalizer">
-  <img src="https://poser.pugx.org/wpbones/geolocalizer/v/stable?style=for-the-badge" alt="Latest Stable Version" />
-  </a>
+[![Latest Stable Version](https://poser.pugx.org/wpbones/geolocalizer/v/stable?style=for-the-badge)](https://packagist.org/packages/wpbones/geolocalizer) &nbsp;
+[![Latest Unstable Version](https://poser.pugx.org/wpbones/geolocalizer/v/unstable?style=for-the-badge)](https://packagist.org/packages/wpbones/geolocalizer) &nbsp;
+[![Total Downloads](https://poser.pugx.org/wpbones/geolocalizer/downloads?style=for-the-badge)](https://packagist.org/packages/wpbones/geolocalizer) &nbsp;
+[![License](https://poser.pugx.org/wpbones/geolocalizer/license?style=for-the-badge)](https://packagist.org/packages/wpbones/geolocalizer) &nbsp;
+[![Monthly Downloads](https://poser.pugx.org/wpbones/geolocalizer/d/monthly?style=for-the-badge)](https://packagist.org/packages/wpbones/geolocalizer)
 
-  <a href="https://packagist.org/packages/wpbones/geolocalizer">
-   <img src="https://poser.pugx.org/wpbones/geolocalizer/v/unstable?style=for-the-badge" alt="Latest Unstable Version" />
-  </a>
-
-  <a href="https://packagist.org/packages/wpbones/geolocalizer">
-   <img src="https://poser.pugx.org/wpbones/geolocalizer/downloads?style=for-the-badge" alt="Total Downloads" />
-  </a>
-
-  <a href="https://packagist.org/packages/wpbones/geolocalizer">
-   <img src="https://poser.pugx.org/wpbones/geolocalizer/license?style=for-the-badge" alt="License" />
-  </a>
-
-  <a href="https://packagist.org/packages/wpbones/geolocalizer">
-   <img src="https://poser.pugx.org/wpbones/geolocalizer/d/monthly?style=for-the-badge" alt="Monthly Downloads" />
-  </a>
-
-</p>
+</div>
 
 Geo Localizer provides a set of utilities to manage geolocation for WordPress/WP Bones
 
