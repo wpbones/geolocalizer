@@ -24,7 +24,10 @@
   "autoload": {
     "psr-4": {
       "WPKirk\\GeoLocalizer\\": "src/"
-    }
+    },
+    "files": [
+      "src/helpers.php"
+    ]
   },
   "minimum-stability": "stable",
   "prefer-stable": true

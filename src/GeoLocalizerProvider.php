@@ -39,6 +39,12 @@ class GeoLocalizerProvider
     return $instance;
   }
 
+  public function __get($name)
+  {
+    $geo = $this->geoIP();
+    return $geo[$name] ?? null;
+  }
+
   /**
    * @return array|bool
    */
@@ -122,19 +128,19 @@ class GeoLocalizerProvider
       }
 
       /*
-             * {
-             *   "ip":"80.181.80.86",
-             *   "country_code":"it",
-             *   "country_name":"italy",
-             *   "region_code":"62",
-             *   "region_name":"latium",
-             *   "city":"rome",
-             *   "zip_code":"00199",
-             *   "time_zone":"europe\/rome",
-             *   "latitude":"41.8919","longitude":"12.5113",
-             *   "metro_code":"0"
-             * }
-             */
+      * {
+      *   "ip":"80.181.80.86",
+      *   "country_code":"it",
+      *   "country_name":"italy",
+      *   "region_code":"62",
+      *   "region_name":"latium",
+      *   "city":"rome",
+      *   "zip_code":"00199",
+      *   "time_zone":"europe\/rome",
+      *   "latitude":"41.8919","longitude":"12.5113",
+      *   "metro_code":"0"
+      * }
+      */
 
       // Turn all geo info in lowercase
       $geo = array_map(
