@@ -22,6 +22,20 @@ class GeoLocalizerProvider
   protected $format = '&output=json&legacy=1';
 
   /**
+   * Static variable to store the geolocation data
+   *
+   * @var array|null
+   */
+  private static $geoData = null;
+
+  /**
+   * Singleton instance
+   *
+   * @var GeoLocalizerProvider
+   */
+  private static $_instance = null;
+
+  /**
    * @param $name
    * @param $arguments
    * @return mixed
@@ -30,22 +44,51 @@ class GeoLocalizerProvider
   {
     $method = "callable" . ucfirst($name);
 
-    $instance = new self;
-
-    if (method_exists($instance, $method)) {
-      return call_user_func_array([$instance, $method], $arguments);
+    if (self::$_instance === null) {
+      self::$_instance = new self;
     }
 
-    return $instance;
+    if (method_exists(self::$_instance, $method)) {
+      return call_user_func_array([self::$_instance, $method], $arguments);
+    }
+
+    return self::$_instance;
   }
 
+  /**
+   * Magic method to get the geo IP information by ip address.
+   *
+   * @param string $name The name of the property to get.
+   * @return mixed|null The value of the property or null if not found.
+   */
   public function __get($name)
   {
     $geo = $this->geoIP();
+
     return $geo[$name] ?? null;
   }
 
   /**
+   * Magic method to call the geo IP information by ip address.
+   *
+   * @param string $name The name of the method to call.
+   * @param array $arguments The arguments to pass to the method.
+   * @return mixed The result of the method call.
+   */
+  public function __call($name, $arguments)
+  {
+    $method = "callable" . ucfirst($name);
+
+    if (method_exists($this, $method)) {
+      return call_user_func_array([$this, $method], $arguments);
+    }
+
+    return $this;
+  }
+
+  /**
+   * Call the geo IP information by ip address.
+   *
    * @return array|bool
    */
   protected function callableGeoIp()
@@ -82,6 +125,9 @@ class GeoLocalizerProvider
    */
   protected function geoIP($ip = '')
   {
+    if (self::$geoData !== null) {
+      return self::$geoData;
+    }
 
     // Get the ip stack API Key
     $api_key = apply_filters('wpbones_geolocalizer_ipstack_api_key', '');
@@ -111,7 +157,9 @@ class GeoLocalizerProvider
 
     $body = wp_remote_retrieve_body($response);
 
-    return (array)json_decode($body);
+    self::$geoData = (array)json_decode($body);
+
+    return self::$geoData;
   }
 
   /**
@@ -164,6 +212,11 @@ class GeoLocalizerProvider
     return false;
   }
 
+  /**
+   * Return an array of countries from the Database
+   *
+   * @return array
+   */
   protected function callableCountries()
   {
     global $wpdb;

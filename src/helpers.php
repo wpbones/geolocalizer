@@ -14,7 +14,6 @@ if (!function_exists('wpbones_geo')) {
    */
   function wpbones_geo()
   {
-    $geo = \WPKirk\GeoLocalizer\GeoLocalizerProvider::geoIP();
-    return $geo;
+    return new \WPKirk\GeoLocalizer\GeoLocalizerProvider();
   }
 }
