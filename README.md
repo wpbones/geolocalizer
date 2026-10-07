@@ -16,6 +16,8 @@ Geo Localizer provides a set of utilities to manage geolocation for WordPress/WP
 
 This package works with a WordPress plugin written with [WP Bones framework library](https://github.com/wpbones/WPBones).
 
+The database templates of geolocalizer 2.x are migrations for WP Bones 3.0 or later. For a plugin still on WP Bones 2.x, use geolocalizer 1.x.
+
 ## Installation
 
 You can install third party packages by using:
@@ -32,13 +34,13 @@ You can use composer to install this package:
 composer require wpbones/geolocalizer
 ```
 
-You may also to add `"wpbones/geolocalizer": "^1.0"` in the `composer.json` file of your plugin:
+You may also to add `"wpbones/geolocalizer": "^2.0"` in the `composer.json` file of your plugin:
 
 ```json copy filename="composer.json" {4}
   "require": {
-    "php": ">=7.4",
-    "wpbones/wpbones": "~0.8",
-    "wpbones/geolocalizer": "~1.0"
+    "php": ">=8.1",
+    "wpbones/wpbones": "^3.0",
+    "wpbones/geolocalizer": "^2.0"
   },
 ```
 
@@ -48,15 +50,13 @@ and run
 composer install
 ```
 
-Alternatively, you can get the single files `src/resources/assets/js/actions-and-filters.js` in your WP Bones plugin and compile it with `gulp`.
-Also, you can get pre-compiled minified version `src/public/js/actions-and-filters.min.js`.
-
 ## Migration
 
-In the `database/migrations` you'll find the default migration database table used for the countries.
-Also. in the `database/seeders` you'll find the data for countries database table.
+The countries table comes as two migrations in `src/database/migrations`: one creates the table, the other fills it with the countries. Copy both files into the `database/migrations` folder of your plugin.
 
-Anyway, you just copy these folders in your plugin `database/` folder.
+WP Bones runs each migration once per site, in the order of their names, when the plugin is activated or its version changes; during development, `php bones migrate` runs them at once. The second one fills the table only while it is empty, so the rows a site has edited are kept.
+
+Up to geolocalizer 1.x the data came as a seeder in `database/seeders`, which WP Bones 3 no longer runs. If your plugin already has that file, run `php bones migrate:to-v3` to turn it into a migration, or replace it with `2017_02_03_140001_countries_table_seeder.php` from this package.
 
 ## Geo services
 

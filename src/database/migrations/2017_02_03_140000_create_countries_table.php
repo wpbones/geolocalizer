@@ -1,11 +1,15 @@
 <?php
 
-use WPKirk\WPBones\Database\Migrations\Migration;
+if (!defined('ABSPATH')) {
+  exit();
+}
+
+use WPKirk\WPBones\Database\Migration;
 
 return new class extends Migration {
-    public function up()
-    {
-        $this->create('countries', "(
+  public function up()
+  {
+    $this->create('countries', "(
       id bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID Zone-Country',
       zone varchar(255) NOT NULL DEFAULT '' COMMENT 'Zone',
       country varchar(255) NOT NULL DEFAULT '' COMMENT 'Country name',
@@ -20,6 +24,5 @@ return new class extends Migration {
       PRIMARY KEY (id),
       KEY status (status)
     ) {$this->charsetCollate};");
-    }
-
+  }
 };

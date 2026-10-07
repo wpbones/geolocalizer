@@ -1,16 +1,23 @@
 <?php
 
-use WPKirk\WPBones\Database\Seeder;
+if (!defined('ABSPATH')) {
+  exit();
+}
 
-return new class extends Seeder {
+use WPKirk\WPBones\Database\Migration;
 
-  protected $tablename = 'countries';
-
-  public function run()
+/*
+ * The countries, seeded once per site after 2017_02_03_140000_create_countries_table.php.
+ * A table that already has rows is left as it is, so the rows a site has edited survive.
+ */
+return new class extends Migration {
+  public function up()
   {
-    $this->truncate();
+    if (!$this->isEmpty('countries')) {
+      return;
+    }
 
-    $this->insert(
+    $this->insert('countries',
       "(id, zone, country, isocode, currency, symbol, symbol_html, code, tax, continent, status)
       VALUES
       	(1,'','Mauritania','MR','Mauritanian Ouguiya','','','MRO',0.00,'africa','publish'),
