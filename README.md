@@ -56,7 +56,9 @@ The countries table comes as two migrations in `src/database/migrations`: one cr
 
 WP Bones runs each migration once per site, in the order of their names, when the plugin is activated or its version changes; during development, `php bones migrate` runs them at once. The second one fills the table only while it is empty, so the rows a site has edited are kept.
 
-Up to geolocalizer 1.x the data came as a seeder in `database/seeders`, which WP Bones 3 no longer runs. If your plugin already has that file, run `php bones migrate:to-v3` to turn it into a migration, or replace it with `2017_02_03_140001_countries_table_seeder.php` from this package.
+Up to geolocalizer 1.x the data came as a seeder in `database/seeders`, which WP Bones 3 no longer runs. If your plugin still has that file, delete it and copy `2017_02_03_140001_countries_table_seeder.php` instead: `php bones migrate:to-v3` would turn it into a migration that keeps its `truncate()`, and so empties the table, edits included, once on every site. If you already converted it and it ran, keep the converted migration and leave this file out: with both, a new site fills the table twice.
+
+In a plugin whose sites already ran migrations with later names, WP Bones notes in the log that this file runs out of order. It does no harm: it finds the table filled and does nothing.
 
 ## Geo services
 
