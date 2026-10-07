@@ -3,7 +3,6 @@
 <div align="center">
 
 [![Latest Stable Version](https://poser.pugx.org/wpbones/geolocalizer/v/stable?style=for-the-badge)](https://packagist.org/packages/wpbones/geolocalizer) &nbsp;
-[![Latest Unstable Version](https://poser.pugx.org/wpbones/geolocalizer/v/unstable?style=for-the-badge)](https://packagist.org/packages/wpbones/geolocalizer) &nbsp;
 [![Total Downloads](https://poser.pugx.org/wpbones/geolocalizer/downloads?style=for-the-badge)](https://packagist.org/packages/wpbones/geolocalizer) &nbsp;
 [![License](https://poser.pugx.org/wpbones/geolocalizer/license?style=for-the-badge)](https://packagist.org/packages/wpbones/geolocalizer) &nbsp;
 [![Monthly Downloads](https://poser.pugx.org/wpbones/geolocalizer/d/monthly?style=for-the-badge)](https://packagist.org/packages/wpbones/geolocalizer)
