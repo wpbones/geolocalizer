@@ -9,6 +9,11 @@
 
 </div>
 
+<div align="center">
+  <p><img src="https://raw.githubusercontent.com/wpbones/.github/main/glancecard/geolocalizer.svg" width="880" alt="geolocalizer at a glance, refreshed daily: commits, releases, stars, issues and pull requests, a year of commit activity, the weekly rhythm, languages, latest commits and releases, contributors" /><br>
+  <sub>Made with <a href="https://github.com/gfazioli/glancecard">glancecard</a> · refreshed daily</sub></p>
+</div>
+
 Geo Localizer provides a set of utilities to manage geolocation for WordPress/WP Bones
 
 ## Requirements
